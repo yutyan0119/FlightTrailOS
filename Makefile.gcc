@@ -1,0 +1,21 @@
+CC=clang
+LD=ld.lld
+AS=clang
+
+CFLAGS=--target=riscv32 -fno-stack-protector -fno-zero-initialized-in-bss -ffreestanding -fno-builtin -nostdlib -nodefaultlibs -nostartfiles -mstrict-align -march=rv32i -Wall -Wextra -mno-relax
+ASFLAGS=--target=riscv32 -mno-relax
+LDFLAGS=-Tkernel/rv32/link.ld
+
+kernel/kernel: kernel/main.o kernel/rv32/boot.o
+	$(LD) $(LDFLAGS) -o $@ $^
+
+kernel/main.o: kernel/main.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+kernel/rv32/boot.o: kernel/rv32/boot.S
+	$(AS) $(ASFLAGS) -c -o $@ $<
+
+clean:
+	rm -rf kernel/*.o kernel/rv32/*.o kernel/kernel
+
+.PHONY: clean
