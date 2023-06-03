@@ -18,4 +18,7 @@ kernel/rv32/boot.o: kernel/rv32/boot.S
 clean:
 	rm -rf kernel/*.o kernel/rv32/*.o kernel/kernel
 
-.PHONY: clean
+run: kernel/kernel
+	qemu-system-riscv32 -smp 1 -nographic -serial mon:stdio --no-reboot -m 128 -machine virt,aclint=on -bios none -kernel kernel/kernel
+
+.PHONY: clean run
