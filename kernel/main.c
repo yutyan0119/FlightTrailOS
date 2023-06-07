@@ -32,6 +32,14 @@ void clear_bss() {
 void task_1() {
     while (1) {
         print_uart0("task_1\n");
+        task_switch(&task_list[0], &task_list[1]);
+    }
+}
+
+void task_2() {
+    while (1) {
+        print_uart0("task_2\n");
+        task_switch(&task_list[1], &task_list[0]);
     }
 }
 
@@ -40,6 +48,7 @@ int main() {
     print_uart0("Hello world!\n");
     print_int(1);
     task_create(&task_list[0], task_1, 0);
+    task_create(&task_list[1], task_2, 1);
     task_load_rv32(&task_list[0].sp);
     return 0;
 }
