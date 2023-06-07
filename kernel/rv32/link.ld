@@ -28,14 +28,14 @@ SECTIONS
         *(.sdata .sdata.*);
     }
     .bss : {
-      __bss = .;
+      __bss_start = .;
       *(.bss .bss.*);
       . = ALIGN(16);
       *(.sbss .sbss.*);
       __bss_end = .;
       . = ALIGN(4096);
-      stack_top = .;
       . = . + 16384;
+      stack_top = .;
     }
 
     . = ALIGN(4096);
