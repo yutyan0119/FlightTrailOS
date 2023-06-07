@@ -30,15 +30,23 @@ void clear_bss() {
 }
 
 void task_1() {
+    int i = 0;
     while (1) {
-        print_uart0("task_1\n");
+        print_uart0("task_1 ");
+        print_int(i);
+        print_uart0("\n");
+        i++;
         task_switch(&task_list[0], &task_list[1]);
     }
 }
 
 void task_2() {
+    int i = 2;
     while (1) {
-        print_uart0("task_2\n");
+        print_uart0("task_2 ");
+        print_int(i);
+        print_uart0("\n");
+        i++;
         task_switch(&task_list[1], &task_list[0]);
     }
 }
