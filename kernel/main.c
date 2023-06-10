@@ -20,11 +20,11 @@ void print_uart0(const char *s) {
 }
 
 void clear_bss() {
-    extern unsigned int* __bss_start, __bss_end;
-    unsigned int start = (unsigned int)__bss_start;
-    unsigned int end = (unsigned int)__bss_end;
+    extern unsigned int __bss_start, __bss_end;
+    unsigned int* start = &__bss_start;
+    unsigned int* end = &__bss_end;
     while (start < end) {
-        *(unsigned int*)start = 0;
+        *start = 0;
         start ++;
     }
 }
@@ -57,6 +57,6 @@ int main() {
     print_int(1);
     task_create(&task_list[0], task_1, 0);
     task_create(&task_list[1], task_2, 1);
-    task_load_rv32(&task_list[0].sp);
+    task_load(&task_list[0]);
     return 0;
 }

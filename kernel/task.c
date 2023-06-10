@@ -5,6 +5,10 @@ void task_switch(task_info* current, task_info* next) {
     task_switch_rv32(&current->sp, (unsigned int)&next->sp);
 }
 
+void task_load(task_info* task) {
+    task_load_rv32(&task->sp);
+}
+
 void task_create(task_info* task, void (*entry)(void), int pid) {
     task->pid = pid;
     //タスクのスタックポインタを設定
